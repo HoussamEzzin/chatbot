@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Chat - BOT</title>
+    </head>
+    <body>
+        {% include 'nav.html' %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" id="username" placeholder="What's your name ? ">
+            <button type="submit"><a href="{% url 'main' %}">Submit</a></button>
+
+        </form>
+
+    </body>
+</html>
