@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'chatterbot.ext.django_chatterbot',
+    'users.apps.UsersConfig',
     'chatbot.apps.ChatbotConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,7 +74,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates'),
-                 os.path.join(BASE_DIR, 'chatbot', 'templates', 'chatbot')],
+                 os.path.join(BASE_DIR, 'chatbot', 'templates', 'chatbot'),
+                 os.path.join(BASE_DIR, 'users', 'templates', 'users')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

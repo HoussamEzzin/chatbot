@@ -1,0 +1,29 @@
+{% extends "chatbot/layout.html" %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %} 
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" >
+      <div id="email" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">UserName</label>
+        <input type="text" class="form-control" id="username" >
+    
+      </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Already have an account ? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+        </small>
+    </div>
+  </form>
+{% endblock content %} 
