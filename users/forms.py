@@ -1,11 +1,28 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
 from django.forms import fields
+from .models import Profile
 
-class UserRegistrationForm(UserCreationForm):
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+    
+    # class Meta is a namespace for config
+    class Meta:
+        model = User
+        fields = ['username','email','password1','password2']
+
+# ModelFrom : mapping class/<input>
+
+class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
     
     class Meta:
         model = User
-        fields = ['username','email','password']
+        fields = ['username','email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']

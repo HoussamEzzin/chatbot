@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    "crispy_bootstrap5"
 ]
 
 CHATTERBOT = {
@@ -55,7 +57,9 @@ CHATTERBOT = {
         'chatterbot.logic.MathematicalEvaluation',
         'chatterbot.logic.TimeLogicAdapter',
         'chatterbot.logic.BestMatch'
-    ]
+    ],
+    'storage_adapter' :"chatterbot.storage.SQLStorageAdapter",
+    'database' : "botData.sqlite3"
 }
 
 MIDDLEWARE = [
@@ -144,7 +148,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home-page'

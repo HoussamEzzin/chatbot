@@ -26,6 +26,9 @@ class ChatterBotApiView(View):
     chatterbot = ChatBot(**settings.CHATTERBOT)
     trainer = ChatterBotCorpusTrainer(chatterbot)
     trainer.train('chatterbot.corpus.english')
+    trainer.train("chatbot/data/trainingdata.yml")
+    
+    
     
     def post(self,request,*args,**kwargs):
         
