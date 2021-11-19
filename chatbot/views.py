@@ -25,8 +25,9 @@ class ChatterBotAppView(TemplateView):
 class ChatterBotApiView(View):
     chatterbot = ChatBot(**settings.CHATTERBOT)
     trainer = ChatterBotCorpusTrainer(chatterbot)
-    trainer.train('chatterbot.corpus.english')
     trainer.train("chatbot/data/trainingdata.yml")
+    trainer.train('chatterbot.corpus.english')
+    
     
     
     
