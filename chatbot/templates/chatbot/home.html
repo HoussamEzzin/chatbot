@@ -1,16 +1,26 @@
-<html>
-    <head>
-        <title>Chat - BOT</title>
-    </head>
-    <body>
-        {% include 'nav.html' %}
+{% extends "chatbot/layout.html" %}
 
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="text" name="username" id="username" placeholder="What's your name ? ">
-            <button type="submit"><a href="{% url 'main' %}">Submit</a></button>
+{% block content %}
+<div>
+    
+</div>
+<div class="d-flex">
+    
+    {% if user.is_authenticated  %}
+    <h1 class='align-text-center' >Happy to see you again {{ user.username }} !!!</h1>     
+    <a href="{% url 'main'%}"><button class="btn btn-success">Get Started ...</button></a>     
 
-        </form>
+                  
+    {% else %}
+    <h1 class="center">
+        Welcome to Chat Bot !
+    </h1>
+    <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+    <span>Or</span>
+    <a href="{% url 'register' %}"><button class="btn btn-primary">Register</button></a>   
+        
+                    
+    {% endif %}
 
-    </body>
-</html>
+</div>
+{% endblock content %} 

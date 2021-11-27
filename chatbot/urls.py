@@ -5,5 +5,6 @@ from chatbot.views import ChatterBotApiView, ChatterBotAppView
 
 urlpatterns = [
     path('', views.home_page,name='home-page'),
+   
     
 ]

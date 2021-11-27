@@ -1,4 +1,7 @@
+{% extends "chatbot/layout.html" %}
 {% load static %}
+
+{% block content %}
 <!doctype html>
 <html>
 
@@ -7,31 +10,32 @@
     
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/> -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
 
 <body>
+    {% if user.is_authenticated  %}
+    <!-- Chat Bot Messaging div -->
+    <div class="container " style="background-color:  #2e86c1 ; color: white;">
 
-    {% include 'nav.html' %}
-
-    <div class="container">
-
-        <div class="jumbotron mt-1">
+        <div class="jumbotron mt-1 ">
             <h1 class="jumbotron-heading text-xs-center">Sakuuragi</h1>
             <p class="lead text-xs-center">
-                This is a web app that allows you to talk to ChatterBot.
+                Hello {{ user }}, My name is Sakuuragi.
+                I am a machine capable of learning. You can talk to me about anything !
             </p>
 
             <hr class="my-2">
-            <h2>Hi {{ user }}</h2>
-            <div class="row">
+            
+            <div class="row container">
                 <!-- <p class='res' hidden>{{response}}</p> -->
-                <div class="col-xs-6 offset-xs-3">
+                <div class="col-xs-6 offset-xs-3" style="width: 60%;">
                     <ul class="list-group chat-log js-chat-log">
                     </ul>
 
-                    <div class="input-group input-group-lg mt-1" >
-                        <input type="text" class="form-control js-text" placeholder="Type something to begin..." />
+                    <div class="d-flex input-group input-group-lg mt-1"  >
+                        <input type="text" size="30" class="form-control js-text" placeholder="Type something to begin..." 
+                        style="margin-right: 15px;" />
                         <span class="input-group-btn">
                             <button class="btn btn-primary js-say" >
                                 
@@ -44,7 +48,22 @@
 
         </div>
 
-    </div>
+    </div>   
+
+                  
+    {% else %}
+    <h1 class="align-text-cente">
+        You are not logged In
+    </h1> 
+    <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+    <span>Or</span>
+    <a href="{% url 'register' %}"><button class="btn btn-primary">Register</button></a>   
+        
+                    
+    {% endif %}
+    
+
+    
 
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -149,3 +168,4 @@
 </body>
 
 </html>
+{% endblock content %} 

@@ -7,26 +7,42 @@ from django.http import JsonResponse, response
 from chatterbot import ChatBot
 from chatterbot.ext.django_chatterbot import settings
 from chatterbot.trainers import ChatterBotCorpusTrainer
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 # Create your views here.
 def home_page(request):
-    context = {
-        'user' : request.body.decode('utf-8')
-    }
-    return render(request, 'chatbot/home.html' ,context)
+    
+    return render(request, 'chatbot/home.html' )
 
 
 
-
+# @login_required(login_url='/login')
 class ChatterBotAppView(TemplateView):
     template_name = 'app.html'
+
 
 class ChatterBotApiView(View):
     chatterbot = ChatBot(**settings.CHATTERBOT)
     trainer = ChatterBotCorpusTrainer(chatterbot)
-    trainer.train("chatbot/data/trainingdata.yml")
-    trainer.train('chatterbot.corpus.english')
+    
+    trainer.train("chatbot/data/train/train_tmp.yml")
+    for i in range(1,29):
+        try:
+            train_path = "chatbot/data/train/train" + str(i) + ".yml"
+            trainer.train(train_path)
+        except Exception:
+            print('---Rrror with train'+ str(i))
+            continue
+    
+    try :
+        trainer.train("chatbot/data/trainingdata.yml")
+        
+        trainer.train('chatterbot.corpus.english')
+    except Exception:
+        print('ERRO WITH TRAINING !')
+        
     
     
     
