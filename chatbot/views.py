@@ -28,13 +28,13 @@ class ChatterBotApiView(View):
     trainer = ChatterBotCorpusTrainer(chatterbot)
     
     trainer.train("chatbot/data/train/train_tmp.yml")
-    for i in range(1,29):
-        try:
-            train_path = "chatbot/data/train/train" + str(i) + ".yml"
-            trainer.train(train_path)
-        except Exception:
-            print('---Rrror with train'+ str(i))
-            continue
+    # for i in range(1,29):
+    #     try:
+    #         train_path = "chatbot/data/train/train" + str(i) + ".yml"
+    #         trainer.train(train_path)
+    #     except Exception:
+    #         print('---Rrror with train'+ str(i))
+    #         continues
     
     try :
         trainer.train("chatbot/data/trainingdata.yml")
@@ -61,6 +61,7 @@ class ChatterBotApiView(View):
         response = self.chatterbot.get_response(input_data)
         response_data = response.serialize()
         print('Success response is :', response_data)
+       
        
         return JsonResponse(response_data, status=200)
     
