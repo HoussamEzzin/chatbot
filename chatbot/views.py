@@ -18,30 +18,30 @@ def home_page(request):
 
 
 
-# @login_required(login_url='/login')
+
 class ChatterBotAppView(TemplateView):
     template_name = 'app.html'
 
 
 class ChatterBotApiView(View):
     chatterbot = ChatBot(**settings.CHATTERBOT)
-    trainer = ChatterBotCorpusTrainer(chatterbot)
+    # trainer = ChatterBotCorpusTrainer(chatterbot)
     
-    trainer.train("chatbot/data/train/train_tmp.yml")
-    # for i in range(1,29):
-    #     try:
-    #         train_path = "chatbot/data/train/train" + str(i) + ".yml"
-    #         trainer.train(train_path)
-    #     except Exception:
-    #         print('---Rrror with train'+ str(i))
-    #         continues
+    # trainer.train("chatbot/data/train/train_tmp.yml")
+    # # for i in range(1,29):
+    # #     try:
+    # #         train_path = "chatbot/data/train/train" + str(i) + ".yml"
+    # #         trainer.train(train_path)
+    # #     except Exception:
+    # #         print('---Rrror with train'+ str(i))
+    # #         continues
     
-    try :
-        trainer.train("chatbot/data/trainingdata.yml")
+    # try :
+    #     trainer.train("chatbot/data/trainingdata.yml")
         
-        trainer.train('chatterbot.corpus.english')
-    except Exception:
-        print('ERRO WITH TRAINING !')
+    #     trainer.train('chatterbot.corpus.english')
+    # except Exception:
+    #     print('ERRO WITH TRAINING !')
         
     
     

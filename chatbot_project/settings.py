@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'chatterbot.ext.django_chatterbot',
     'users.apps.UsersConfig',
     'chatbot.apps.ChatbotConfig',
+    'sentiment_analysis.apps.SentimentAnalysisConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +80,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates'),
                  os.path.join(BASE_DIR, 'chatbot', 'templates', 'chatbot'),
-                 os.path.join(BASE_DIR, 'users', 'templates', 'users')],
+                 os.path.join(BASE_DIR, 'users', 'templates', 'users'),
+                 os.path.join(BASE_DIR, 'sentiment_analysis', 'templates', 'sentiment_analysis')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

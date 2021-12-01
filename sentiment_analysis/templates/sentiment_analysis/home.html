@@ -1,0 +1,14 @@
+{% extends "chatbot/layout.html" %}
+{% block content %}
+    <div>
+        <div>
+            <h3 class="text-xs-center">
+                Dear {{ user }}, Sakuuragi is here for you.
+                This application provide a service that determines your mood based on a short conversation with Sakuuragi
+            </h3>
+            <button>
+                <a href="{% url 'sentiment-analysis-chat' %}">Start Here ...</a>
+            </button>
+        </div>
+    </div>
+{% endblock content %} 
