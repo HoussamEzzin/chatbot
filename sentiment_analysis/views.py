@@ -7,24 +7,12 @@ from django.http import JsonResponse, response
 from chatterbot import ChatBot
 from chatterbot.ext.django_chatterbot import settings
 from chatterbot.trainers import ChatterBotCorpusTrainer
+from sentiment_analysis.analyze import analyze_input, determine_emotion
 # Create your views here.
 
-# Intializing positive and negative words array for sentiment analysis using rule-based approach
-
-positive_words = []
-with open('sentiment_analysis/data/positive.txt') as p :
-    for line in p:
-        line = line.strip()
-        positive_words.append(line)
-
-negative_words = []
-with open('sentiment_analysis/data/negative.txt') as n:
-    for line in n:
-        line = line.strip()
-        negative_words.append(line)
 
 score = 0
-analyze = True
+count = 0
 
 @login_required(login_url='/login')
 def sentiment_analysis_home(request):
@@ -52,27 +40,13 @@ class ChatterBotApiView(View):
     
     def post(self,request,*args,**kwargs):
         global score
-        global analyze
+        global count
+        
         input_data = json.loads(request.body.decode('utf-8'))
         
         
-        
-        if analyze == True : 
-            words = input_data['text'].split(' ')
-            for word in words:
-                if word in positive_words and word not in ['',' ']:
-                    score += 1
-                elif word in negative_words and word not in ['',' ']:
-                    score -= 1
-            print('Actual Score : '+str(score)+'\n\n')
-            if score >= 10:
-                analyze = False
-                print('Great !')
-            elif score <= -10 :
-                analyze = True
-                print('Terrible')
     
-      
+        
         
         if 'text' not in input_data:
             return JsonResponse({
@@ -88,10 +62,22 @@ class ChatterBotApiView(View):
        
         print('**Success response is :', response_data)
         
-        emotion = 'nothing'
-        output_result = [response_data,emotion]
+
+        while count <3 :
+            count +=1
+            print('MESSAGE NUMBER ', count)
+            score = analyze_input(input_data['text'],score)
+            print('----SCORE IS : ', score)
+            print("****////***** EMOTION IS :", determine_emotion(score))
+            if count == 3:
+                emotion_data = {
+                    'emotion' : determine_emotion(score),
+                    'close_chat' : 'true'
+                }
+                return JsonResponse(emotion_data, status=200,safe=False)
+            return JsonResponse(response_data, status=200,safe=False)
        
-        return JsonResponse(output_result, status=200,safe=False)
+        
     
     def get(self, request, *args, **kwargs):
         return JsonResponse({

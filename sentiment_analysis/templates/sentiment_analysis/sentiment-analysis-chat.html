@@ -33,7 +33,7 @@
     <!-- Chat Bot Messaging div -->
     <div class="container " style="background-color:   #e74c3c  ; color: black;">
 
-        <div class="jumbotron mt-1 ">
+        <div class="jumbotron mt-1 " id='chat-big-div'>
             <h1 class="jumbotron-heading text-xs-center">Sakuuragi</h1>
             <p class="lead text-xs-center">
                 Tell us how you feel, talk free...
@@ -141,7 +141,11 @@
             $chatlog.append($row);
         }
 
-        
+        function showEmotion(emotion){
+            let chat = document.getElementById('chat-big-div')
+            chat.innerHTML = emotion
+
+        }
 
         function submitInput() {
             var inputData = {
@@ -158,11 +162,7 @@
                 data: JSON.stringify(inputData),
                 contentType: 'application/json',
                 success: function(data){
-                    $response = data[0].text
-                    console.log(data[0].text)
-                    console.log(data)
-                    
-                    
+                    getResponse(data)
                 },
                 error: function(){
                     alert('Error')
@@ -170,6 +170,9 @@
             });
                 
             $submit.done(function (statement) {
+                if(statement.close_chat === 'true'){
+                    showEmotion(statement.emotion)
+                }
                 createRow(statement.text);
 
                 // Clear the input field
@@ -186,14 +189,15 @@
 
     
 
-        function getResponse(){
-            createRow($response)
+        function getResponse(data){
+            console.log(data)
+            //createRow(data.text)
         }
         
 
         $sayButton.click(function () {
             submitInput();
-            getResponse();
+            
         });
 
         $input.keydown(function (event) {
