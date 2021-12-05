@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.views.generic.base import TemplateView
 from django.views.generic import View
-from django.http import JsonResponse, response
+from django.http import JsonResponse
 from chatterbot import ChatBot
 from chatterbot.ext.django_chatterbot import settings
 from chatterbot.trainers import ChatterBotCorpusTrainer
@@ -32,7 +32,7 @@ class ChatterBotApiView(View):
         trainer.train("sentiment_analysis/data/sentiments.yml")
         print('sentiment training completed !')
     except Exception:
-        print('ERRO WITH TRAINING !')
+        print('ERROR WITH TRAINING !')
         
     
     

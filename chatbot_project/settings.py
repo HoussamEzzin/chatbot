@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'chatbot.apps.ChatbotConfig',
     'sentiment_analysis.apps.SentimentAnalysisConfig',
+    'youtube_analysis.apps.YoutubeAnalysisConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -169,7 +170,7 @@ LOGIN_REDIRECT_URL = 'home-page'
 
 # Youtube API :
 
-YOUTUBE_AUTH_EMAIL = 'ezzinhoussam@gmail.com'
-YOUTUBE_AUTH_PASSWORD = ''
-YOUTUBE_DEVELOPER_KEY = 'AIzaSyD2-CXZu9MJ04hX6-dYohzaFvCBzmsSpWo'
-YOUTUBE_CLIENT_ID = '35225584560-o2p8e71k47b9ks892gmssk7jbrskrrvv.apps.googleusercontent.com'
+
+
+# YOUTUBE_DEVELOPER_KEY = 'AIzaSyD2-CXZu9MJ04hX6-dYohzaFvCBzmsSpWo'
+# YOUTUBE_CLIENT_ID = '35225584560-o2p8e71k47b9ks892gmssk7jbrskrrvv.apps.googleusercontent.com'

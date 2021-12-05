@@ -1,0 +1,136 @@
+{% extends "chatbot/layout.html" %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html>
+
+<head>
+    <title>Youtube Videos Sentiment Analysis</title>
+    
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/> -->
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    {% if user.is_authenticated  %}
+    <!-- Chat Bot Messaging div -->
+    <div class="container " style="background-color:   #e74c3c  ; color: black;">
+
+        <div class="jumbotron mt-1 " id='chat-big-div'>
+
+            <hr class="my-2">
+            
+            <div class="d-flex  container">
+                <!-- <p class='res' hidden>{{response}}</p> -->
+                <div class="col-xs-6 offset-xs-3" style="width: 60%;">
+                    <ul class="list-group chat-log js-chat-log">
+                    </ul>
+
+                        <input type="text" size="30" class="form-control js-text" placeholder="Video URL" 
+                        style="margin-right: 15px;" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary sub " >
+                                Submit</button>
+                        </span>
+                  
+
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>   
+
+                  
+    {% else %}
+    <h1 class="align-text-cente">
+        You are not logged In
+    </h1> 
+    <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+    <span>Or</span>
+    <a href="{% url 'register' %}"><button class="btn btn-primary">Register</button></a>   
+        
+                    
+    {% endif %}
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/js.cookie.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script>
+        var requestURL = "{% url 'analyze-video-api' %}"
+        var csrftoken = Cookies.get('csrftoken');
+        var $submitButton = $('.sub');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        
+        var $input = $('.js-text');
+       
+
+        function submitInput() {
+            var inputData = {
+                'text': $input.val()
+            }
+
+            
+            var $submit = $.ajax({
+                type: 'POST',
+                url: requestURL,
+                data: JSON.stringify(inputData),
+                contentType: 'application/json',
+                success: function(data){
+                    getResponse(data)
+                },
+                error: function(){
+                    alert('Error')
+                }
+            });
+                
+            $submit.done(function (statement) {
+                $input.val('');
+                
+
+            });
+
+            $submit.fail(function () {
+                // TODO: Handle errors
+            });
+        }
+
+        $submitButton.click(function () {
+            submitInput();
+            
+        });
+
+        function getResponse(data){
+            console.log(data)
+        }
+
+        $input.keydown(function (event) {
+            // Submit the input when the enter button is pressed
+            if (event.keyCode == 13) {
+                submitInput();
+            }
+        });
+    </script>
+</body>
+
+</html>
+{% endblock content %} 
