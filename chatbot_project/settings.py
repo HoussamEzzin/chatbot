@@ -165,3 +165,11 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home-page'
+
+
+# Youtube API :
+
+YOUTUBE_AUTH_EMAIL = 'ezzinhoussam@gmail.com'
+YOUTUBE_AUTH_PASSWORD = 'Misterh1999*'
+YOUTUBE_DEVELOPER_KEY = 'AIzaSyD2-CXZu9MJ04hX6-dYohzaFvCBzmsSpWo'
+YOUTUBE_CLIENT_ID = '35225584560-o2p8e71k47b9ks892gmssk7jbrskrrvv.apps.googleusercontent.com'
