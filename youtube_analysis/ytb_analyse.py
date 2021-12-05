@@ -32,17 +32,28 @@ def analyze_input(input,previous_score):
     
     return previous_score
 
-def get_video_data():
+def get_video_data(video_id):
     # statdata=youtube.channels().list(part='snippet',id=channelId).execute()
     request = youtube.commentThreads().list(
                     part="snippet,replies",
-                    videoId = 'uNGmyQ8UbZ8'
+                    videoId = video_id
         )
-       
-    
     response = request.execute()
-   
+    data = response['items']  
+    return data
+
+def determine_emotion(score):
+    emotion = ''
+    if score >= 10:
+        emotion = 'Awesome !!'
+    elif score > 0 and score < 10 :
+        emotion = 'Good'
+    elif score < 0 and score > -10 :
+        emotion = 'not very well'
+    else:
+        emotion = 'really terrible'
     
-        
-    return response
+    emotion = 'This video is ' + emotion
+    
+    return emotion
 

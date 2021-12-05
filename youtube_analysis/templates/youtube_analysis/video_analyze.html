@@ -82,7 +82,12 @@
         });
         
         var $input = $('.js-text');
-       
+        
+        function showEmotion(emotion){
+            let chat = document.getElementById('chat-big-div')
+            chat.innerHTML = emotion
+
+        }
 
         function submitInput() {
             var inputData = {
@@ -105,7 +110,7 @@
                 
             $submit.done(function (statement) {
                 $input.val('');
-                
+                showEmotion(statement.emotion)
 
             });
 
