@@ -14,5 +14,6 @@ Still under dev
 - Add to do list with Sakuuragi that takes user input and transform it into tasks.
 - Integrate random quote machine.
 - Add score for the user.
-- 
+
+
 

@@ -39,6 +39,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'chatterbot.ext.django_chatterbot',
     'users.apps.UsersConfig',
+    'todo_list.apps.TodoListConfig',
     'chatbot.apps.ChatbotConfig',
     'sentiment_analysis.apps.SentimentAnalysisConfig',
     'youtube_analysis.apps.YoutubeAnalysisConfig',
@@ -82,7 +83,8 @@ TEMPLATES = [
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates'),
                  os.path.join(BASE_DIR, 'chatbot', 'templates', 'chatbot'),
                  os.path.join(BASE_DIR, 'users', 'templates', 'users'),
-                 os.path.join(BASE_DIR, 'sentiment_analysis', 'templates', 'sentiment_analysis')],
+                 os.path.join(BASE_DIR, 'sentiment_analysis', 'templates', 'sentiment_analysis'),
+                 os.path.join(BASE_DIR, 'todo_list', 'templates', 'todo_list')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

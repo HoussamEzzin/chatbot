@@ -9,12 +9,16 @@ from chatterbot.ext.django_chatterbot import settings
 from chatterbot.trainers import ChatterBotCorpusTrainer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from chatbot.generate_quotes import generate
 
 
 # Create your views here.
 def home_page(request):
+    context = {
+        'quote': generate()
+    }
     
-    return render(request, 'chatbot/home.html' )
+    return render(request, 'chatbot/home.html' ,context)
 
 
 

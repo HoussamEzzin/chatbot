@@ -1,0 +1,222 @@
+{% extends "chatbot/layout.html" %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html>
+
+<head>
+    <title>To Do With SaKu</title>
+    
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/> -->
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .fa {
+          font-size: 50px;
+          cursor: pointer;
+          user-select: none;
+        }
+        
+        .fa:hover {
+          color: darkblue;
+        }
+        .usage{
+            margin: 200px;
+            background-color: goldenrod;
+            color: black;
+        }
+        </style>
+</head>
+
+<body>
+    {% if user.is_authenticated  %}
+    <!-- Chat Bot Messaging div -->
+    <div class="container " style="background-color:   #e74c3c  ; color: black;">
+
+        <div class="jumbotron mt-1 " id='chat-big-div'>
+            <h1 class="jumbotron-heading text-xs-center">Sakuuragi</h1>
+            <p class="lead text-xs-center">
+                Tell us what you want to do, be ambitious !
+            </p>
+
+            <hr class="my-2">
+            
+            
+            <div class="d-flex  container">
+                <!-- <p class='res' hidden>{{response}}</p> -->
+                <div class="col-xs-6 offset-xs-3" style="width: 60%;">
+                    <ul class="list-group chat-log js-chat-log">
+                    </ul>
+
+                    <div class="d-flex input-group input-group-lg mt-1"  >
+                        <input type="text" size="30" class="form-control js-text" placeholder="Type something to begin..." 
+                        style="margin-right: 15px;" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary js-say" >
+                                
+                                Submit</button>
+                        </span>
+                    </div>
+
+                </div>
+                
+                <div class="usage">
+                    <p>  usage </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>   
+
+                  
+    {% else %}
+    <h1 class="align-text-cente">
+        You are not logged In
+    </h1> 
+    <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+    <span>Or</span>
+    <a href="{% url 'register' %}"><button class="btn btn-primary">Register</button></a>   
+        
+                    
+    {% endif %}
+    
+
+    
+
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script> -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/js.cookie.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script>
+        var $feedback = $('.feedback');
+     
+        function cleanThumbsDiv(){
+            el = document.getElementById('thumbs');
+            el.remove()
+        }
+        function upClicked(x) {
+             
+            cleanThumbsDiv();
+            
+            $feedback.text('Thank You !');
+          
+        }
+                                            
+                                            
+        function downClicked(){
+            cleanThumbsDiv();
+            document.getElementById('send-report').classList.remove('d-none');
+        }
+        var chatterbotUrl = '{% url "sentiment-chat" %}';
+        var csrftoken = Cookies.get('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        var $satisfaction = $('.satisfaction-rate')
+        var $chatlog = $('.js-chat-log');
+        var $input = $('.js-text');
+        var $sayButton = $('.js-say');
+        var $response = ''
+        
+
+        function createRow(text) {
+            var $row = $('<li class="list-group-item"></li>');
+
+            $row.text(text);
+            $chatlog.append($row);
+        }
+
+        function showEmotion(emotion){
+            let chat = document.getElementById('chat-big-div')
+            chat.innerHTML = emotion
+
+        }
+
+        function submitInput() {
+            var inputData = {
+                'text': $input.val()
+            }
+
+            // Display the user's input on the web page
+            createRow(inputData.text);
+
+            
+            var $submit = $.ajax({
+                type: 'POST',
+                url: chatterbotUrl,
+                data: JSON.stringify(inputData),
+                contentType: 'application/json',
+                success: function(data){
+                    getResponse(data)
+                },
+                error: function(){
+                    alert('Error')
+                }
+            });
+                
+            $submit.done(function (statement) {
+                if(statement.close_chat === 'true'){
+                    showEmotion(statement.emotion)
+                }
+                createRow(statement.text);
+
+                // Clear the input field
+                $input.val('');
+
+                // Scroll to the bottom of the chat interface
+                $chatlog[0].scrollTop = $chatlog[0].scrollHeight;
+            });
+
+            $submit.fail(function () {
+                // TODO: Handle errors
+            });
+        }
+
+    
+
+        function getResponse(data){
+            console.log(data)
+            //createRow(data.text)
+        }
+        
+
+        $sayButton.click(function () {
+            submitInput();
+            
+        });
+
+        $input.keydown(function (event) {
+            // Submit the input when the enter button is pressed
+            if (event.keyCode == 13) {
+                submitInput();
+            }
+        });
+    </script>
+</body>
+
+</html>
+{% endblock content %} 

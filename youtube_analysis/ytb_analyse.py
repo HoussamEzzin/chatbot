@@ -1,18 +1,18 @@
 # Intializing positive and negative words array for sentiment analysis using rule-based approach
 from googleapiclient.discovery import build
 positive_words = []
-with open('sentiment_analysis/data/positive.txt') as p :
+with open('youtube_analysis/data/positive.txt') as p :
     for line in p:
         line = line.strip()
         positive_words.append(line)
 
 negative_words = []
-with open('sentiment_analysis/data/negative.txt') as n:
+with open('youtube_analysis/data/negative.txt') as n:
     for line in n:
         line = line.strip()
         negative_words.append(line)
 
-import time
+
 
 
 # YOUTUBE_DEVELOPER_KEY = 'AIzaSyD2-CXZu9MJ04hX6-dYohzaFvCBzmsSpWo'

@@ -1,14 +1,55 @@
 {% extends "chatbot/layout.html" %}
 
 {% block content %}
+
+<style>
+    .welcome-text{
+        font-style: italic;
+    }
+    .get-started{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 150px;
+    }
+
+    .quote{
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        margin-top: 100px;
+    }
+
+    .quote-text{
+        font-style: bold;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    
+    
+</style>
+
 <div>
     
 </div>
 <div class="d-flex">
     
     {% if user.is_authenticated  %}
-    <h1 class='align-text-center' >Happy to see you again {{ user.username }} !!!</h1>     
-    <a href="{% url 'main'%}"><button class="btn btn-success">Get Started ...</button></a>     
+    <div class="container-fluid">
+        <div class="get-started">
+            <h1 class='align-text-center welcome-text' >Happy to see you again {{ user.username }} !</h1>     
+            <a href="{% url 'main'%}"><button class="btn btn-success">Get Started ...</button></a> 
+        </div>
+          
+        
+        <div class="quote">
+            <h4 class="quote-text">{{quote.0}}</h4>
+            <h6 class="quote-author">{{quote.1}}</h6>
+        </div>
+    </div>
+    
 
                   
     {% else %}
